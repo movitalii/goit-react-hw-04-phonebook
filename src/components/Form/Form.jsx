@@ -1,40 +1,48 @@
-import React, { Component } from 'react';
+import {useState} from 'react';
 import shortid from 'shortid';
-
 import css from './Form.module.css';
-const INITIAL_STATE = {
-  name: '',
-  number: '',
-};
 
-export class Form extends Component {
-  state = { ...INITIAL_STATE };
+export default function Form({onAddingContacts}) {
+  const[name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
-  onValueHandler = e => {
+  const onValueHandler = e => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+
+      case 'number':
+        setNumber(value);
+        break;
+      
+      default:
+        return;
+    };
   };
-  onSubmitBtn = e => {
+
+  const onSubmitBtn = e => {
     e.preventDefault();
 
-    const newContact = {
+     const newContact = {
       id: shortid.generate(),
-      name: this.state.name,
-      number: this.state.number,
-    };
+      name: name,
+      number: number,
+    };    
 
-    this.props.onAddingContacts(newContact);
-    this.reset();
+    onAddingContacts(newContact);
+    reset();
   };
 
-  reset() {
-    this.setState({ ...INITIAL_STATE });
+  const reset = () => {
+    setName('');
+    setNumber('');
   }
 
-  render() {
-    const { name, number } = this.state;
     return (
-      <form className={css.form} onSubmit={this.onSubmitBtn}>
+      <form className={css.form} onSubmit={onSubmitBtn}>
         <label className={css.form__label}>
           Name
           <input
@@ -46,7 +54,7 @@ export class Form extends Component {
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
             value={name}
-            onChange={this.onValueHandler}
+            onChange={onValueHandler}
           />
         </label>
         <label className={css.form__label}>
@@ -60,7 +68,7 @@ export class Form extends Component {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
             value={number}
-            onChange={this.onValueHandler}
+            onChange={onValueHandler}
           />
         </label>
         <button className={css.form__button} type="submit">
@@ -68,5 +76,4 @@ export class Form extends Component {
         </button>
       </form>
     );
-  }
 }
