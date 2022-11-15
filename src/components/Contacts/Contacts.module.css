@@ -1,0 +1,42 @@
+
+.delete__list {
+    list-style: none;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 300px;
+}
+
+.delete__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;    
+    width: 100%;
+}
+
+.delete__item:not(:last-child){
+    margin-bottom: 20px;
+}
+
+.delete__userName {
+   margin-right: 10px;
+}
+
+.delete__btn {
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(0, 119, 255);
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    box-shadow: 5px 5px 5px rgb(40, 57, 77);
+    transform: scale(1);
+    transition: transform, 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.delete__btn:hover,
+.delete__btn:focus {
+    transform: scale(1.1);
+}
